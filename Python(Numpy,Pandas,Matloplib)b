@@ -1,0 +1,121 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+file_path = "/mnt/data/inventory_forecasting_data (1).csv"
+df = pd.read_csv('/content/inventory_forecasting_data (1).csv')
+
+print("Dataset Overview:")
+print(df.info())
+
+print("Dataset Overview:")
+print(df.info())
+Dataset Overview:
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 100000 entries, 0 to 99999
+Data columns (total 10 columns):
+ #   Column           Non-Null Count   Dtype  
+---  ------           --------------   -----  
+ 0   Date             100000 non-null  object 
+ 1   Product_ID       100000 non-null  int64  
+ 2   Product_Name     100000 non-null  object 
+ 3   Category         100000 non-null  object 
+ 4   Sales_Quantity   100000 non-null  int64  
+ 5   Stock_Level      100000 non-null  int64  
+ 6   Demand_Forecast  100000 non-null  int64  
+ 7   Supplier         100000 non-null  object 
+ 8   Cost_Price       100000 non-null  float64
+ 9   Selling_Price    100000 non-null  float64
+dtypes: float64(2), int64(4), object(4)
+memory usage: 7.6+ MB
+None
+
+print("\nFirst 5 rows:")
+print(df.head())
+
+First 5 rows:
+         Date  Product_ID Product_Name    Category  Sales_Quantity  \
+0  2023-01-01        1231         Will   Groceries              46   
+1  2023-01-01        4274         Feel   Furniture              35   
+2  2023-01-01        1334        Floor      Beauty              28   
+3  2023-01-01        3348          Day  Automotive              21   
+4  2023-01-01        1808      Present   Furniture              46   
+
+   Stock_Level  Demand_Forecast                      Supplier  Cost_Price  \
+0          331               15                   Young-Yoder      353.11   
+1          120               35     Patterson, Gomez and Long      486.99   
+2          309               41             Gonzalez and Sons      194.74   
+3          389               21                  Williams Ltd      211.02   
+4          201               18  Cooper, Erickson and Delgado      479.71   
+
+   Selling_Price  
+0         423.03  
+1         648.28  
+2         579.74  
+3         519.72  
+4         273.12  
+
+
+print("\nMissing Values:")
+print(df.isnull().sum())
+
+Missing Values:
+Date               0
+Product_ID         0
+Product_Name       0
+Category           0
+Sales_Quantity     0
+Stock_Level        0
+Demand_Forecast    0
+Supplier           0
+Cost_Price         0
+Selling_Price      0
+dtype: int64
+
+print("\nSummary Statistics:")
+print(df.describe())
+
+Summary Statistics:
+          Product_ID  Sales_Quantity    Stock_Level  Demand_Forecast  \
+count  100000.000000   100000.000000  100000.000000    100000.000000   
+mean     2997.250020       24.990930     254.029340        32.028990   
+std      1155.963446       14.163754     141.091032        15.880769   
+min      1000.000000        1.000000      10.000000         5.000000   
+25%      1998.000000       13.000000     132.000000        18.000000   
+50%      2997.000000       25.000000     253.000000        32.000000   
+75%      4001.000000       37.000000     376.000000        46.000000   
+max      4999.000000       49.000000     499.000000        59.000000   
+
+          Cost_Price  Selling_Price  
+count  100000.000000  100000.000000  
+mean      253.107114     505.453794  
+std       143.029925     285.819789  
+min         5.000000      10.020000  
+25%       129.570000     257.895000  
+50%       253.345000     505.885000  
+75%       376.870000     752.432500  
+max       499.990000     999.960000  
+
+plt.figure(figsize=(10, 6))
+sns.heatmap(df.isnull(), cmap="viridis", cbar=False, yticklabels=False)
+plt.title("Missing Values Heatmap")
+plt.show()
+
+if 'date' in df.columns and 'demand' in df.columns:
+    df['date'] = pd.to_datetime(df['date'])  
+    df = df.sort_values(by='date')
+
+if 'date' in df.columns and 'demand' in df.columns:
+    df['date'] = pd.to_datetime(df['date'])  
+    df = df.sort_values(by='date')
+    # The following lines were incorrectly indented
+    plt.figure(figsize=(12, 6))
+    plt.plot(df['date'], df['demand'], marker='o', linestyle='-')
+    plt.xlabel("Date")
+    plt.ylabel("Demand")
+    plt.title("Inventory Demand Over Time")
+    plt.grid()
+    plt.show()
+else:
+    print('\nColumns 'date' and 'demand' not found. Please check the dataset structure.')
