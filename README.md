@@ -22,3 +22,5 @@ Power BI creates interactive dashboards for stakeholders to monitor inventory tr
 Connects directly to MySQL for real-time reporting
 Provides dynamic visualizations (charts, graphs, heatmaps)
 Enables business intelligence with KPI tracking
+
+![image](https://github.com/user-attachments/assets/7f08512f-1977-44bd-b8cc-9ad8f694de73)
